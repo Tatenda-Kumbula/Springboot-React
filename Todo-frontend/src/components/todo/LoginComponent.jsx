@@ -44,17 +44,38 @@ class LoginComponent extends Component {
     // }
 
     loginClicked() {
-        //in28minutes,dummy
-        if(this.state.username==='in28minutes' && this.state.password==='dummy'){
-            AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
+        //in28minutes,Tatenda
+        // if(this.state.username==='in28minutes' && this.state.password==='dummy'){
+        //     AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
+        //     this.props.history.push(`/welcome/${this.state.username}`)
+        //     //this.setState({showSuccessMessage:true})
+        //     //this.setState({hasLoginFailed:false})
+        // }
+        // else {
+        //     this.setState({showSuccessMessage:false})
+        //     this.setState({hasLoginFailed:true})
+        // }
+
+        // AuthenticationService
+        // .executeBasicAuthenticationService(this.state.username, this.state.password)
+        // .then(() => {
+        //     AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
+        //     this.props.history.push(`/welcome/${this.state.username}`)
+        // }).catch( () =>{
+        //     this.setState({showSuccessMessage:false})
+        //     this.setState({hasLoginFailed:true})
+        // })
+
+        AuthenticationService
+        .executeJwtAuthenticationService(this.state.username, this.state.password)
+        .then((response) => {
+            AuthenticationService.registerSuccessfulLoginForJwt(this.state.username,response.data.token)
             this.props.history.push(`/welcome/${this.state.username}`)
-            //this.setState({showSuccessMessage:true})
-            //this.setState({hasLoginFailed:false})
-        }
-        else {
+        }).catch( () =>{
             this.setState({showSuccessMessage:false})
             this.setState({hasLoginFailed:true})
-        }
+        })
+
     }
 
     render() {
